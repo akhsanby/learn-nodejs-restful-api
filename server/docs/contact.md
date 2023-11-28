@@ -10,14 +10,14 @@ Headers :
 
 Request Body :
 
-````json
+```json
 {
   "first_name": "Bayu",
   "last_name": "Rian",
   "email": "bayu@gmail.com",
   "phone": "903230239"
 }
-``
+```
 
 Response Body Success
 
@@ -31,7 +31,7 @@ Response Body Success
     "phone": "903230239"
   }
 }
-````
+```
 
 Response Body Errors
 
