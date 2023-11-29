@@ -1,24 +1,51 @@
 import Link from "next/link";
+import { axiosClient } from "@/utils/axios-client.js";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { setCookie } from "nookies";
 
 export default function Login() {
+  const router = useRouter();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axiosClient.post("/api/users/login", {
+        username,
+        password,
+      });
+      const { token } = result.data.data;
+      setCookie(null, "token", token, {
+        path: "/",
+      });
+
+      router.push("/home");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div style={{ padding: "2rem" }}>
-      <div class="card" style={{ width: "18rem" }}>
-        <div class="card-body">
-          <form>
-            <div class="mb-3">
-              <label for="username" class="form-label">
+      <div className="card" style={{ width: "18rem" }}>
+        <div className="card-body">
+          <form method="POST" onSubmit={(e) => handleLogin(e)}>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
                 Username
               </label>
-              <input type="text" class="form-control" id="username" placeholder="Input your username" />
+              <input type="text" className="form-control" id="username" placeholder="Input your username" value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
                 Password
               </label>
-              <input type="password" class="form-control" id="password" placeholder="Input your password" />
+              <input type="password" className="form-control" id="password" placeholder="Input your password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Login
             </button>
           </form>
