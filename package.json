@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "server": "node ./server/src/main.js",
+    "client": "cd client && npm run dev"
+  }
+}
